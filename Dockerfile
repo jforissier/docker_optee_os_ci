@@ -18,6 +18,7 @@ RUN apt-get update \
   git \
   libmagickwand-dev \
   libssl-dev \
+  lsb-release \
   make \
   nodejs-legacy \
   npm \

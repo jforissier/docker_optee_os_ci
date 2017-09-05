@@ -8,6 +8,7 @@ RUN apt-get update \
   bc \
   bison \
   ccache \
+  clang \
   curl \
   expect \
   flex \

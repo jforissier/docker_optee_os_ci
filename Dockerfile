@@ -37,5 +37,3 @@ RUN groupadd -r guest \
 
 RUN echo "%sudo ALL=(ALL) NOPASSWD: ALL" >>/etc/sudoers
 
-USER guest
-

@@ -33,8 +33,3 @@ RUN apt-get update \
   wget \
  && apt-get autoremove
 
-RUN groupadd -r guest \
- && useradd -m -g guest -G sudo guest
-
-RUN echo "%sudo ALL=(ALL) NOPASSWD: ALL" >>/etc/sudoers
-

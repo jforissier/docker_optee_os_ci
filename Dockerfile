@@ -1,6 +1,7 @@
-FROM ubuntu:17.04
+FROM ubuntu:18.04
 MAINTAINER Jerome Forissier <jerome.forissier@linaro.org>
 
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
  && apt-get install -y \
   android-tools-fastboot \
@@ -21,10 +22,9 @@ RUN apt-get update \
   libssl-dev \
   lsb-release \
   make \
-  nodejs-legacy \
-  npm \
   python-crypto \
   python-pip \
+  python-pyelftools \
   python-serial \
   python-wand \
   sudo \

@@ -18,15 +18,11 @@ RUN apt-get update \
   gdisk \
   gettext \
   git \
-  libmagickwand-dev \
   libssl-dev \
   lsb-release \
   make \
   python-crypto \
-  python-pip \
   python-pyelftools \
-  python-serial \
-  python-wand \
   sudo \
   uuid-dev \
   vim \

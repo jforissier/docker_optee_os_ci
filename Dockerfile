@@ -23,6 +23,9 @@ RUN apt-get update \
   make \
   python-crypto \
   python-pyelftools \
+  python3 \
+  python3-crypto \
+  python3-pyelftools \
   sudo \
   uuid-dev \
   vim \

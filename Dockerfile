@@ -25,6 +25,7 @@ RUN apt-get update \
   python-pyelftools \
   python3 \
   python3-crypto \
+  python3-pycryptodome \
   python3-pyelftools \
   sudo \
   uuid-dev \

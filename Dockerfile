@@ -11,6 +11,7 @@ RUN apt-get update \
   ccache \
   clang \
   curl \
+  device-tree-compiler \
   expect \
   flex \
   gcc-aarch64-linux-gnu \

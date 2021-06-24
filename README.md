@@ -1,3 +1,3 @@
 Dockerfile used to generate jforissier/optee_os_ci on hub.docker.com.
-This image is used by the Shippable Continuous Integration (CI) script
-in OP-TEE OS: https://github.com/OP-TEE/optee_os/blob/master/.shippable.yml#L8
+This image is used by the OP-TEE OS Continuous Integration (CI) script:
+https://github.com/OP-TEE/optee_os/blob/master/.azure-pipelines.yml

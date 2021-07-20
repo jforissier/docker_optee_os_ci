@@ -96,11 +96,7 @@ RUN cd /root/optee_repo_qemu_v8/build \
  && touch /boot/vmlinuz-`uname -r` \
  && make -j2 toolchains
 
-# FIXME: 'touch' creates a dummy kernel file to defeat a simplistic check in
-# qemu_v8.mk (in this case virt-make-fs will actually pick a kernel installed
-# by the linux-image-kvm package)
-RUN touch /boot/vmlinuz-`uname -r` \
- && cd /root/optee_repo_qemu_v8/build \
+RUN cd /root/optee_repo_qemu_v8/build \
  && git fetch github pull/497/head && git checkout FETCH_HEAD \
  && make -j$(getconf _NPROCESSORS_ONLN) XEN_BOOT=y
 

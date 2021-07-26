@@ -22,6 +22,7 @@ RUN apt-get update \
   bison \
   ccache \
   clang \
+  codespell \
   curl \
   device-tree-compiler \
   expect \

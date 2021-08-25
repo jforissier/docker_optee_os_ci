@@ -93,7 +93,6 @@ RUN cd /root/optee_repo_qemu_v8 \
  && repo sync -j20
 
 RUN cd /root/optee_repo_qemu_v8/build \
- && touch /boot/vmlinuz-`uname -r` \
  && make -j2 toolchains
 
 RUN cd /root/optee_repo_qemu_v8/build \

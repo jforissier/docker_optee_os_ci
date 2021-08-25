@@ -96,7 +96,6 @@ RUN cd /root/optee_repo_qemu_v8/build \
  && make -j2 toolchains
 
 RUN cd /root/optee_repo_qemu_v8/build \
- && git fetch github pull/497/head && git checkout FETCH_HEAD \
  && make -j$(getconf _NPROCESSORS_ONLN) XEN_BOOT=y
 
 RUN cd /root/optee_repo_qemu_v8/build \

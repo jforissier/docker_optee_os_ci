@@ -6,6 +6,7 @@
 # - First, with default flags
 # - Second, with XEN_BOOT=y (i.e., with Normal World virtualization and
 #   CFG_VIRTUALIZATION=y in optee_os)
+# - Third, with OPTEE_RUST_ENABLE=y (building Teaclave SDK and examples)
 # Doing so prepares the source tree for faster build + test with and without
 # virtualization. The CI script can use this image and:
 # 1. Run "repo sync" to obtain any update (likely to happen often for optee_*
@@ -97,6 +98,10 @@ RUN cd /root/optee_repo_qemu_v8/build \
 
 RUN cd /root/optee_repo_qemu_v8/build \
  && make -j$(getconf _NPROCESSORS_ONLN) XEN_BOOT=y
+
+RUN cd /root/optee_repo_qemu_v8/build \
+ && make -j$(getconf _NPROCESSORS_ONLN) OPTEE_RUST_ENABLE=y optee-rust \
+ && /usr/bin/bash -c "source /root/.cargo/env && make -j$(getconf _NPROCESSORS_ONLN) OPTEE_RUST_ENABLE=y"
 
 RUN cd /root/optee_repo_qemu_v8/build \
  && make arm-tf-clean \

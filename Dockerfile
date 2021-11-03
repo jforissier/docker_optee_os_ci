@@ -71,6 +71,7 @@ RUN apt-get update \
   python-is-python3 \
   python3 \
   python3-crypto \
+  python3-cryptography \
   python3-distutils \
   python3-pycryptodome \
   python3-pyelftools \

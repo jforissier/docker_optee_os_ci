@@ -10,8 +10,49 @@
 #
 # [1] https://optee.readthedocs.io/en/latest/building/devices/qemu.html#qemu-v8
 
+FROM ubuntu as gcc-builder
+MAINTAINER Jerome Forissier <jerome@forissier.org>
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt update \
+ && apt upgrade -y \
+ && apt install -y \
+  binutils \
+  build-essential \
+  bison \
+  flex \
+  gawk \
+  git \
+  gcc \
+  help2man \
+  libncurses5-dev \
+  libtool \
+  libtool-bin \
+  python3-dev \
+  texinfo \
+  unzip \
+  wget
+
+RUN useradd -ms /bin/bash nonroot
+USER nonroot
+WORKDIR /home/nonroot
+
+# Build and install cross-compiler with BTI support in ~nonroot/x-tools/aarch64-unknown-linux-gnu/bin
+RUN git clone https://github.com/crosstool-ng/crosstool-ng \
+ && cd crosstool-ng \
+ && ./bootstrap \
+ && ./configure --enable-local \
+ && make -j$(nproc) \
+ && ./ct-ng aarch64-unknown-linux-uclibc \
+ && echo 'CT_CC_GCC_EXTRA_CONFIG_ARRAY="--enable-standard-branch-protection"' >>.config \
+ && echo 'CT_CC_GCC_CORE_EXTRA_CONFIG_ARRAY="--enable-standard-branch-protection"' >>.config \
+ && ./ct-ng build.$(nproc)
+
 FROM ubuntu:22.04
 MAINTAINER Jerome Forissier <jerome.forissier@linaro.org>
+
+RUN mkdir -p /usr/local
+COPY --from=gcc-builder /home/nonroot/x-tools/aarch64-unknown-linux-uclibc /usr/local/
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \

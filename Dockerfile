@@ -21,44 +21,6 @@
 # [1] https://optee.readthedocs.io/en/latest/building/devices/qemu.html#qemu-v8
 # [2] https://github.com/OP-TEE/manifest/blob/master/qemu_v8.xml
 
-FROM ubuntu as gcc-with-bti-builder
-MAINTAINER Jerome Forissier <jerome@forissier.org>
-
-ENV DEBIAN_FRONTEND=noninteractive
-RUN apt update \
- && apt upgrade -y \
- && apt install -y \
-  binutils \
-  build-essential \
-  bison \
-  flex \
-  gawk \
-  git \
-  gcc \
-  help2man \
-  libncurses5-dev \
-  libtool \
-  libtool-bin \
-  python3-dev \
-  texinfo \
-  unzip \
-  wget
-
-RUN useradd -ms /bin/bash nonroot
-USER nonroot
-WORKDIR /home/nonroot
-
-# Build and install cross-compiler with BTI support in ~nonroot/x-tools/aarch64-unknown-linux-gnu/bin
-RUN git clone https://github.com/crosstool-ng/crosstool-ng \
- && cd crosstool-ng \
- && ./bootstrap \
- && ./configure --enable-local \
- && make -j$(nproc) \
- && ./ct-ng aarch64-unknown-linux-gnu \
- && echo 'CT_CC_GCC_EXTRA_CONFIG_ARRAY="--enable-standard-branch-protection"' >>.config \
- && echo 'CT_CC_GCC_CORE_EXTRA_CONFIG_ARRAY="--enable-standard-branch-protection"' >>.config \
- && ./ct-ng build.$(nproc)
-
 FROM ubuntu as clang-downloader
 MAINTAINER Jerome Forissier <jerome@forissier.org>
 
@@ -73,9 +35,6 @@ FROM ubuntu:21.04
 MAINTAINER Jerome Forissier <jerome.forissier@linaro.org>
 
 COPY --from=clang-downloader /root/clang/ /usr/local/
-
-RUN mkdir -p /root/x-tools
-COPY --from=gcc-with-bti-builder /home/nonroot/x-tools /root/x-tools/
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
@@ -144,10 +103,6 @@ RUN cd /root/optee_repo_qemu_v8/build \
 RUN cd /root/optee_repo_qemu_v8/build \
  && make -j$(getconf _NPROCESSORS_ONLN) OPTEE_RUST_ENABLE=y optee-rust \
  && /usr/bin/bash -c "source /root/.cargo/env && make -j$(getconf _NPROCESSORS_ONLN) OPTEE_RUST_ENABLE=y"
-
-RUN cd /root/optee_repo_qemu_v8/build \
- && rm -rf ../out-br/build/optee* ../optee_os/out \
- && make -j$(nproc) CFG_CORE_BTI=y CFG_TA_BTI=y CFG_USER_TA_TARGETS=ta_arm64 AARCH64_CROSS_COMPILE=/root/x-tools/aarch64-unknown-linux-gnu/bin/aarch64-unknown-linux-gnu-
 
 RUN cd /root/optee_repo_qemu_v8/build \
  && make arm-tf-clean \

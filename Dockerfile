@@ -76,23 +76,17 @@ RUN curl -o /usr/local/bin/repo https://storage.googleapis.com/git-repo-download
  && chmod a+x /usr/local/bin/repo \
  && git config --global user.name "CI user" \
  && git config --global user.email "ci@invalid" \
- && mkdir -p /root/optee_repo_qemu_v8
-
-RUN cd /root/optee_repo_qemu_v8 \
+ && mkdir -p /root/optee_repo_qemu_v8 \
+ && cd /root/optee_repo_qemu_v8 \
  && repo init -u https://github.com/OP-TEE/manifest.git -m qemu_v8.xml \
- && repo sync -j20
-
-RUN cd /root/optee_repo_qemu_v8/build \
- && make -j2 toolchains
-
-RUN cd /root/optee_repo_qemu_v8/build \
- && make -j$(getconf _NPROCESSORS_ONLN) XEN_BOOT=y
-
-RUN cd /root/optee_repo_qemu_v8/build \
- && make -j$(getconf _NPROCESSORS_ONLN) OPTEE_RUST_ENABLE=y optee-rust \
- && /usr/bin/bash -c "source /root/.cargo/env && make -j$(getconf _NPROCESSORS_ONLN) OPTEE_RUST_ENABLE=y"
-
-RUN cd /root/optee_repo_qemu_v8/build \
+ && repo sync -j20 \
+ && cd /root/optee_repo_qemu_v8/build \
+ && make -j2 toolchains \
+ && rm -f toolchains/gcc*.tar.xz \
+ && make -j$(nproc) XEN_BOOT=y \
+ && rm -rf out-br out-br-domu \
+ && make -j$(nproc) OPTEE_RUST_ENABLE=y optee-rust \
+ && /usr/bin/bash -c "source /root/.cargo/env && make -j$(nproc) OPTEE_RUST_ENABLE=y" \
+ && rm -rf out-br \
  && make arm-tf-clean \
- && rm -rf ../out-br/build/optee* ../optee_os/out \
- && make -j$(getconf _NPROCESSORS_ONLN)
+ && make -j$(nproc)

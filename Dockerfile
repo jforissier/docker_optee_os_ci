@@ -1,5 +1,5 @@
 FROM ubuntu as clang-downloader
-MAINTAINER Jerome Forissier <jerome@forissier.org>
+MAINTAINER Jerome Forissier <jerome.forissier@linaro.org>
 
 RUN apt update && \
     apt install -y wget xz-utils
@@ -8,7 +8,7 @@ ADD get_clang.sh /root/get_clang.sh
 WORKDIR /root
 RUN ./get_clang.sh 12.0.0 ./clang
 
-FROM ubuntu:18.04
+FROM ubuntu:21.10
 MAINTAINER Jerome Forissier <jerome.forissier@linaro.org>
 
 COPY --from=clang-downloader /root/clang/ /usr/local/
@@ -16,7 +16,6 @@ COPY --from=clang-downloader /root/clang/ /usr/local/
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
  && apt-get install -y \
-  android-tools-fastboot \
   autoconf \
   bc \
   bison \
@@ -32,11 +31,10 @@ RUN apt-get update \
   gdisk \
   gettext \
   git \
+  libncurses5 \
   libssl-dev \
   lsb-release \
   make \
-  python-crypto \
-  python-pyelftools \
   python3 \
   python3-cryptography \
   python3-pycryptodome \

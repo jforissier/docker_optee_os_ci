@@ -8,7 +8,7 @@ ADD get_clang.sh /root/get_clang.sh
 WORKDIR /root
 RUN ./get_clang.sh 12.0.0 ./clang
 
-FROM ubuntu:21.10
+FROM ubuntu:22.04
 MAINTAINER Jerome Forissier <jerome.forissier@linaro.org>
 
 COPY --from=clang-downloader /root/clang/ /usr/local/
@@ -37,6 +37,7 @@ RUN apt-get update \
   make \
   python3 \
   python3-cryptography \
+  python3-pycodestyle \
   python3-pycryptodome \
   python3-pyelftools \
   sudo \

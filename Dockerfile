@@ -21,6 +21,7 @@ RUN apt-get update \
   bison \
   ccache \
   clang \
+  cmake \
   codespell \
   curl \
   device-tree-compiler \

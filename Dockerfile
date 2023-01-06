@@ -71,7 +71,7 @@ RUN curl -o /usr/local/bin/repo https://storage.googleapis.com/git-repo-download
  && repo sync -j20 \
  && cd /root/optee_repo_qemu_v8/build \
  && make -j2 toolchains \
- && rm -f toolchains/gcc*.tar.xz \
+ && rm -f /root/optee_repo_qemu_v8/toolchains/gcc*.tar.xz \
  && make -j$(nproc) XEN_BOOT=y \
  && rm -rf out-br out-br-domu \
  && make arm-tf-clean \

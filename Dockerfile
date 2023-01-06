@@ -40,6 +40,7 @@ RUN apt-get update \
   libguestfs-tools \
   libpixman-1-dev \
   linux-image-kvm \
+  libslirp-dev \
   libssl-dev \
   lsb-release \
   make \

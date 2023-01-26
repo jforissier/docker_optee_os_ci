@@ -77,3 +77,7 @@ RUN curl -o /usr/local/bin/repo https://storage.googleapis.com/git-repo-download
  && rm -rf out-br out-br-domu \
  && make arm-tf-clean \
  && make -j$(nproc)
+
+COPY get_optee_qemuv8.sh /root
+
+RUN chmod +x /root/get_optee_qemuv8.sh

@@ -1,12 +1,6 @@
 # This Dockerfile creates an image suitable to run OP-TEE OS CI tests
-# in the QEMUv8 environment. It pulls Ubuntu plus all the required packages.
-# In order to reduce CI build time, tt also clones the whole OP-TEE source
-# tree for the QEMUv8 environment like any developer would typically do [1],
-# and it builds some configurations so that the build cache (ccache) is
-# populated and some images will usually not need to be rebuilt (the kernel,
-# QEMU...).
-# This image should be rebuilt on a regular basis such as when the kernel or
-# any other "big" piece of software is updated.
+# in the QEMUv8 environment [1]. It pulls Ubuntu plus all the required
+# packages.
 #
 # [1] https://optee.readthedocs.io/en/latest/building/devices/qemu.html#qemu-v8
 
@@ -107,18 +101,7 @@ RUN apt-get update \
 RUN curl -o /usr/local/bin/repo https://storage.googleapis.com/git-repo-downloads/repo \
  && chmod a+x /usr/local/bin/repo \
  && git config --global user.name "CI user" \
- && git config --global user.email "ci@invalid" \
- && mkdir -p /root/optee_repo_qemu_v8 \
- && cd /root/optee_repo_qemu_v8 \
- && repo init -u https://github.com/OP-TEE/manifest.git -m qemu_v8.xml \
- && repo sync -j20 \
- && cd /root/optee_repo_qemu_v8/build \
- && make -j2 toolchains \
- && rm -f /root/optee_repo_qemu_v8/toolchains/gcc*.tar.xz \
- && make -j$(nproc) XEN_BOOT=y \
- && rm -rf out-br out-br-domu \
- && make arm-tf-clean \
- && make -j$(nproc)
+ && git config --global user.email "ci@invalid"
 
 COPY get_optee_qemuv8.sh /root
 

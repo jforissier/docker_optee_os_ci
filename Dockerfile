@@ -23,6 +23,7 @@ RUN apt-get update \
   bison \
   bzip2 \
   ccache \
+  cmake \
   cpio \
   curl \
   device-tree-compiler \

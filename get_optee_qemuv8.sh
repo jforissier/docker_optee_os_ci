@@ -5,10 +5,11 @@
 #
 # [1] https://optee.readthedocs.io/en/latest/building/devices/qemu.html#qemu-v8
 
+ROOT_DIR=${1:-/root/optee_repo_qemu_v8}
 set -e
-mkdir -p /root/optee_repo_qemu_v8
-cd /root/optee_repo_qemu_v8
+mkdir -p ${ROOT_DIR}
+cd ${ROOT_DIR}
 repo init -u https://github.com/OP-TEE/manifest.git -m qemu_v8.xml
 repo sync -j20
-cd /root/optee_repo_qemu_v8/build
-make -j2 toolchains && rm -f /root/optee_repo_qemu_v8/toolchains/gcc*.tar.xz
+cd ${ROOT_DIR}/build
+make -j2 toolchains && rm -f ${ROOT_DIR}/toolchains/gcc*.tar.xz

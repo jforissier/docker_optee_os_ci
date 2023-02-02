@@ -105,4 +105,5 @@ RUN curl -o /usr/local/bin/repo https://storage.googleapis.com/git-repo-download
 
 COPY get_optee_qemuv8.sh /root
 
+RUN chmod +rx /root
 RUN chmod +x /root/get_optee_qemuv8.sh

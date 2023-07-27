@@ -9,7 +9,7 @@ ROOT_DIR=${1:-/root/optee_repo_qemu_v8}
 set -e
 mkdir -p ${ROOT_DIR}
 cd ${ROOT_DIR}
-repo init -u https://github.com/OP-TEE/manifest.git -m qemu_v8.xml
+repo init -u https://github.com/jforissier/manifest.git -b test -m qemu_v8.xml
 repo sync -j20
 cd ${ROOT_DIR}/build
 make -j2 toolchains && rm -f ${ROOT_DIR}/toolchains/gcc*.tar.xz

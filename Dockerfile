@@ -32,8 +32,11 @@ USER nonroot
 WORKDIR /home/nonroot
 
 # Build and install cross-compiler with BTI support in ~nonroot/x-tools/aarch64-unknown-linux-gnu/bin
+# This particular commit of crosstool-ng builds GCC 12.2.0 by default which is what we want
+# (13.x does not work with C++ TAs)
 RUN git clone https://github.com/crosstool-ng/crosstool-ng \
  && cd crosstool-ng \
+ && git checkout aa6cc4d7 \
  && ./bootstrap \
  && ./configure --enable-local \
  && make -j$(nproc) \

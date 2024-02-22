@@ -29,6 +29,7 @@ RUN apt-get update \
   flex \
   gcc-aarch64-linux-gnu \
   gcc-arm-linux-gnueabihf \
+  gcc-riscv64-linux-gnu \
   gdisk \
   gettext \
   git \

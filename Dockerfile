@@ -1,8 +1,8 @@
 # This Dockerfile creates an image suitable to run OP-TEE OS CI tests
-# in the QEMUv8 environment [1]. It pulls Ubuntu plus all the required
+# in the QEMU environment [1]. It pulls Ubuntu plus all the required
 # packages.
 #
-# [1] https://optee.readthedocs.io/en/latest/building/devices/qemu.html#qemu-v8
+# [1] https://optee.readthedocs.io/en/latest/building/devices/qemu.html
 
 FROM ubuntu as gcc-builder
 MAINTAINER Jerome Forissier <jerome@forissier.org>
@@ -109,9 +109,7 @@ RUN curl -o /usr/local/bin/repo https://storage.googleapis.com/git-repo-download
  && git config --global user.name "CI user" \
  && git config --global user.email "ci@invalid"
 
-COPY get_optee_qemuv8.sh /root
 COPY get_optee.sh /root
 
 RUN chmod +rx /root
-RUN chmod +x /root/get_optee_qemuv8.sh
 RUN chmod +x /root/get_optee.sh

@@ -76,7 +76,9 @@ RUN apt-get update \
   libattr1-dev \
   libcap-ng-dev \
   libglib2.0-dev \
+  libgmp-dev \
   libguestfs-tools \
+  libmpc-dev \
   libpixman-1-dev \
   linux-image-kvm \
   libslirp-dev \

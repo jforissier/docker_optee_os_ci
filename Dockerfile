@@ -108,6 +108,8 @@ RUN curl -o /usr/local/bin/repo https://storage.googleapis.com/git-repo-download
  && git config --global user.email "ci@invalid"
 
 COPY get_optee_qemuv8.sh /root
+COPY get_optee.sh /root
 
 RUN chmod +rx /root
 RUN chmod +x /root/get_optee_qemuv8.sh
+RUN chmod +x /root/get_optee.sh

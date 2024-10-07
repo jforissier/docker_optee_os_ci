@@ -1,0 +1,3 @@
+[submodule "optee_build_git"]
+	path = optee_build_git
+	url = https://github.com/OP-TEE/build

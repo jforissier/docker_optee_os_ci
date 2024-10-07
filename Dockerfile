@@ -4,7 +4,7 @@
 #
 # [1] https://optee.readthedocs.io/en/latest/building/devices/qemu.html
 
-FROM ubuntu as gcc-builder
+FROM ubuntu:22.04 as gcc-builder
 MAINTAINER Jerome Forissier <jerome@forissier.org>
 
 ENV DEBIAN_FRONTEND=noninteractive

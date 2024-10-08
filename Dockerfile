@@ -113,3 +113,6 @@ COPY get_optee.sh /root
 
 RUN chmod +rx /root
 RUN chmod +x /root/get_optee.sh
+
+ARG CLANG_BUILD_VER
+COPY --from=optee_os_ci_clang_builder /root/clang-${CLANG_BUILD_VER} /usr

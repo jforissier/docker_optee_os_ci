@@ -94,6 +94,7 @@ RUN apt-get update \
   python3-distutils \
   python3-pycryptodome \
   python3-pyelftools \
+  python3-tomli \
   python3-venv \
   rsync \
   sudo \

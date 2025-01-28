@@ -11,4 +11,4 @@ cd ${ROOT_DIR}
 repo init -u https://github.com/OP-TEE/manifest.git -m ${PLAT}.xml
 repo sync -j20
 cd ${ROOT_DIR}/build
-make -j2 toolchains && rm -f ${ROOT_DIR}/toolchains/gcc*.tar.xz
+make -j$(nproc) toolchains && rm -f ${ROOT_DIR}/toolchains/gcc*.tar.xz

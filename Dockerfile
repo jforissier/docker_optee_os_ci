@@ -52,8 +52,8 @@ RUN mkdir -p /usr/local
 COPY --from=gcc-builder /home/nonroot/x-tools/aarch64-unknown-linux-uclibc /usr/local/
 
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update \
- && apt-get install -y \
+RUN apt update \
+ && apt install -y \
   acpica-tools \
   android-tools-fastboot \
   autoconf \
@@ -80,7 +80,6 @@ RUN apt-get update \
   libguestfs-tools \
   libmpc-dev \
   libpixman-1-dev \
-  linux-image-kvm \
   libslirp-dev \
   libssl-dev \
   lsb-release \

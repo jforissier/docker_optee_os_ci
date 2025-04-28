@@ -45,7 +45,7 @@ RUN git clone https://github.com/crosstool-ng/crosstool-ng \
  && echo 'CT_CC_GCC_CORE_EXTRA_CONFIG_ARRAY="--enable-standard-branch-protection"' >>.config \
  && ./ct-ng build.$(nproc)
 
-FROM ubuntu:22.04
+FROM ubuntu:24.10
 MAINTAINER Jerome Forissier <jerome.forissier@linaro.org>
 
 RUN mkdir -p /usr/local
@@ -61,6 +61,7 @@ RUN apt update \
   bison \
   bzip2 \
   ccache \
+  clang \
   cmake \
   cpio \
   curl \
@@ -82,6 +83,8 @@ RUN apt update \
   libpixman-1-dev \
   libslirp-dev \
   libssl-dev \
+  lld \
+  llvm \
   lsb-release \
   make \
   ninja-build \
@@ -89,8 +92,6 @@ RUN apt update \
   python-is-python3 \
   python3 \
   python3-cryptography \
-  python3-cryptography \
-  python3-distutils \
   python3-pycryptodome \
   python3-pyelftools \
   python3-tomli \
@@ -113,6 +114,3 @@ COPY get_optee.sh /root
 
 RUN chmod +rx /root
 RUN chmod +x /root/get_optee.sh
-
-ARG CLANG_BUILD_VER
-COPY --from=optee_os_ci_clang_builder /root/clang-${CLANG_BUILD_VER} /usr

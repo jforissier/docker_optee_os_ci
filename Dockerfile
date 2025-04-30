@@ -92,6 +92,7 @@ RUN apt update \
   python-is-python3 \
   python3 \
   python3-cryptography \
+  python3-distutils-extra \
   python3-pycryptodome \
   python3-pyelftools \
   python3-tomli \

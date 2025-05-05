@@ -77,6 +77,7 @@ RUN apt update \
   libattr1-dev \
   libcap-ng-dev \
   libglib2.0-dev \
+  libgnutls28-dev \
   libgmp-dev \
   libguestfs-tools \
   libmpc-dev \

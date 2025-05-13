@@ -94,6 +94,7 @@ RUN apt update \
   python3 \
   python3-cryptography \
   python3-distutils-extra \
+  python3-poetry \
   python3-pycryptodome \
   python3-pyelftools \
   python3-tomli \

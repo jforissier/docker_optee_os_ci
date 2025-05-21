@@ -61,7 +61,6 @@ RUN apt update \
   bison \
   bzip2 \
   ccache \
-  clang \
   cmake \
   cpio \
   curl \
@@ -84,8 +83,6 @@ RUN apt update \
   libpixman-1-dev \
   libslirp-dev \
   libssl-dev \
-  lld \
-  llvm \
   lsb-release \
   make \
   ninja-build \
@@ -107,6 +104,13 @@ RUN apt update \
   xz-utils \
   wget \
  && apt-get autoremove
+
+# Get latest Clang 20.x version from snapshot server
+# https://github.com/OP-TEE/optee_os/issues/7408
+RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | gpg --dearmor -o /etc/apt/keyrings/llvm-snapshot.gpg && chmod a+r /etc/apt/keyrings/llvm-snapshot.gpg
+RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/llvm-snapshot.gpg] http://apt.llvm.org/oracular/ llvm-toolchain-oracular-20 main" | tee /etc/apt/sources.list.d/llvm-snapshot.list > /dev/null
+RUN apt update && apt install -y clang-20 llvm-20 lld-20
+RUN bash -c 'for i in /usr/bin/{clang,clang++,lld,ld.lld,ld64.lld,lld-link,wasm-ld}-20 $(ls /usr/bin/llvm*-20); do tool_name=$(basename $i -20); update-alternatives --install /usr/bin/$tool_name $tool_name $i 100; done'
 
 RUN curl -o /usr/local/bin/repo https://storage.googleapis.com/git-repo-downloads/repo \
  && chmod a+x /usr/local/bin/repo \

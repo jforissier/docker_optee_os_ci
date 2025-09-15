@@ -45,7 +45,7 @@ RUN git clone https://github.com/crosstool-ng/crosstool-ng \
  && echo 'CT_CC_GCC_CORE_EXTRA_CONFIG_ARRAY="--enable-standard-branch-protection"' >>.config \
  && ./ct-ng build.$(nproc)
 
-FROM ubuntu:24.10
+FROM ubuntu:24.04
 MAINTAINER Jerome Forissier <jerome.forissier@linaro.org>
 
 RUN mkdir -p /usr/local

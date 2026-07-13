@@ -97,6 +97,7 @@ RUN apt update \
   python3-tomli \
   python3-venv \
   rsync \
+  swig \
   sudo \
   unzip \
   uuid-dev \

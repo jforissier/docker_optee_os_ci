@@ -4,7 +4,7 @@
 #
 # [1] https://optee.readthedocs.io/en/latest/building/devices/qemu.html
 
-FROM ubuntu:22.04 as gcc-builder
+FROM ubuntu:24.04 as gcc-builder
 MAINTAINER Jerome Forissier <jerome@forissier.org>
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -22,6 +22,8 @@ RUN apt update \
   libncurses5-dev \
   libtool \
   libtool-bin \
+  libzstd-dev \
+  pkg-config \
   python3-dev \
   texinfo \
   unzip \
@@ -32,17 +34,23 @@ USER nonroot
 WORKDIR /home/nonroot
 
 # Build and install cross-compiler with BTI support in ~nonroot/x-tools/aarch64-unknown-linux-gnu/bin
-# This particular commit of crosstool-ng builds GCC 12.2.0 by default which is what we want
-# (13.x does not work with C++ TAs)
+# GCC 12.5.0 is selected because later versions do not work with C++ TAs
 RUN git clone https://github.com/crosstool-ng/crosstool-ng \
  && cd crosstool-ng \
- && git checkout aa6cc4d7 \
+ && git checkout crosstool-ng-1.29.0 \
  && ./bootstrap \
  && ./configure --enable-local \
  && make -j$(nproc) \
  && ./ct-ng aarch64-unknown-linux-uclibc \
- && echo 'CT_CC_GCC_EXTRA_CONFIG_ARRAY="--enable-standard-branch-protection"' >>.config \
- && echo 'CT_CC_GCC_CORE_EXTRA_CONFIG_ARRAY="--enable-standard-branch-protection"' >>.config \
+ && printf '%s\n' \
+      '# CT_DEBUG_STRACE is not set' \
+      'CT_GCC_V_12=y' \
+      'CT_GCC_VERSION="12.5.0"' \
+      'CT_CC_GCC_EXTRA_CONFIG_ARRAY="--enable-standard-branch-protection"' \
+      'CT_CC_GCC_CORE_EXTRA_CONFIG_ARRAY="--enable-standard-branch-protection"' \
+      > gcc.config \
+ && cat gcc.config >> .config \
+ && yes '' | ./ct-ng oldconfig \
  && ./ct-ng build.$(nproc)
 
 FROM ubuntu:24.04

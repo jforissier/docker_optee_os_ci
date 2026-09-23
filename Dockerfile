@@ -1,4 +1,4 @@
-FROM ubuntu:24.10
+FROM ubuntu:24.04
 MAINTAINER Jerome Forissier <jerome.forissier@linaro.org>
 
 ENV DEBIAN_FRONTEND=noninteractive
